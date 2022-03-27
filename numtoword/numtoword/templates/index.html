@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number to Word</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+<form action="{% url 'numtowordapp:fn_convert' %}" method="post">
+    {% csrf_token %}
+<div class="form">
+<div class="container"><br>
+    <div class="page-content" id="divContent">
+        <div class="page-header">
+                <h1>
+                    Number to Word Conversion
+                </h1><br>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">
+                        Enter the Number<span class="required" style="color:red;">*</span>
+                    </label>
+                    <div class="col-xs-12 col-sm-9">
+                        <div class="input-group col-xs-12 col-sm-9">
+                            <input type="text" class="form-control input-sm"  id="txtNumber" name="txtNumber" placeholder="Enter the Number">
+                        </div>
+                    </div>
+                </div><br>
+                 <div class="form-group">
+                    <div class="col-xs-12 col-sm-9">
+                        <div class="input-group col-xs-12 col-sm-9">
+                            <input type="submit" name="Submit" class="btn btn-primary" onclick="return validate()" style="cursor: pointer;">
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+</form>
+<br>
+
+<form method="get" action="{% url 'numtowordapp:fn_play' %}">
+    <input name="txtWord" value="{{num}}" readonly>
+    <button type="submit" style="cursor: pointer;"><i class="fa fa-play-circle fa-xl" aria-hidden="true"></i>&nbsp;Play</button>
+</form>
+<br>
+<script type="text/javascript">
+    function validate(){
+        var number = document.getElementById('txtNumber').value;
+        if(number=="")
+        {
+            alert("Please Enter the Number");
+            return false;
+        }
+        if(number < 0){
+            alert("Sorry...Negative Numbers are Not allowed");
+            return false;
+        }
+        var decimal=  /^[-+]?[0-9]+\.[0-9]+$/;
+        if(number.match(decimal))
+        {
+            alert("Sorry...Decimal Numbers are Not allowed");
+            return false;
+        }
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        if(format.test(number)){
+            alert("Sorry...Special Characters are Not allowed");
+            return false;
+        }
+        var letters = /^[a-zA-Z]+$/;
+        if(number.match(letters))
+        {
+            alert("Sorry...Characters are Not allowed");
+            return false;
+        }
+        if(number>1000000)
+        {
+            alert("Please Enter a Number less than or equal to 1000000");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
